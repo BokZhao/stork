@@ -1,11 +1,17 @@
-#include "StorkApp.h"
+/****************************************************************/
+/* MOOSE - Multiphysics Object Oriented Simulation Environment  */
+/*                                                              */
+/*          All contents are licensed under LGPL V2.1           */
+/*             See LICENSE for full restrictions                */
+/****************************************************************/
+#include "NavierStokesApp.h"
 #include "MooseInit.h"
 #include "Moose.h"
 #include "MooseApp.h"
 #include "AppFactory.h"
 
 // Create a performance log
-PerfLog Moose::perf_log("Stork");
+PerfLog Moose::perf_log("NavierStokes");
 
 // Begin the main program.
 int main(int argc, char *argv[])
@@ -14,10 +20,13 @@ int main(int argc, char *argv[])
   MooseInit init(argc, argv);
 
   // Register this application's MooseApp and any it depends on
-  StorkApp::registerApps();
+  NavierStokesApp::registerApps();
 
   // This creates dynamic memory that we're responsible for deleting
-  MooseApp * app = AppFactory::createApp("StorkApp", argc, argv);
+  MooseApp * app = AppFactory::createApp("NavierStokesApp", argc, argv);
+
+  app->setCheckUnusedFlag(true);
+  app->setErrorOverridden();
 
   // Execute the application
   app->run();
